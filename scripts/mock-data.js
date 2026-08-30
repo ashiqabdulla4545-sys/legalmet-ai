@@ -24,6 +24,46 @@ export const MockData = {
     systemPerceptionHealth: 98.6
   },
 
+  notifications: [
+    {
+      id: "NOTIF-01",
+      type: "VIOLATION",
+      title: "Critical Dual MRP Overprint Flagged",
+      message: "Case LM-2026-8841 (Darjeeling Tea) detected +10.5% adhesive price sticker violation.",
+      time: "2m ago",
+      read: false,
+      targetPath: "/workspace",
+      caseId: "LM-2026-8841"
+    },
+    {
+      id: "NOTIF-02",
+      type: "RADAR",
+      title: "Hotspot Alert: Azadpur Wholesale Hub",
+      message: "Surveillance density crossed 88 violations/sq.km. Squad deployment recommended.",
+      time: "18m ago",
+      read: false,
+      targetPath: "/risk-radar"
+    },
+    {
+      id: "NOTIF-03",
+      type: "STATUTE",
+      title: "Statutory Rule Matrix Synchronized",
+      message: "G.S.R. 202(E) Packaging declarations database updated with latest amendment.",
+      time: "1h ago",
+      read: false,
+      targetPath: "/regulatory-intel"
+    },
+    {
+      id: "NOTIF-04",
+      type: "AUDIT",
+      title: "Cryptographic Certificate Issued",
+      message: "DL-MET-CERT-8842 issued to Bharat Agro Foods with SHA-256 state seal.",
+      time: "3h ago",
+      read: true,
+      targetPath: "/audit-trail"
+    }
+  ],
+
   cases: [
     {
       id: "LM-2026-8841",

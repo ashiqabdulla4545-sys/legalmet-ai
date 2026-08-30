@@ -141,6 +141,66 @@ class LegalMetApp {
     if (nameEl) nameEl.textContent = this.state.data.inspector.name;
   }
 
+  renderNotifications() {
+    const listEl = document.querySelector('#notifDropdownList');
+    const badgeEl = document.querySelector('#notifBadgeCounter');
+    if (!listEl || !badgeEl) return;
+
+    const notifs = this.state.data.notifications || [];
+    const unreadCount = notifs.filter(n => !n.read).length;
+
+    if (unreadCount > 0) {
+      badgeEl.style.display = 'flex';
+      badgeEl.textContent = unreadCount;
+    } else {
+      badgeEl.style.display = 'none';
+    }
+
+    listEl.innerHTML = notifs.map(n => {
+      let icon = 'warning';
+      let iconClass = 'violation';
+      if (n.type === 'RADAR') { icon = 'radar'; iconClass = 'radar'; }
+      else if (n.type === 'STATUTE') { icon = 'menu_book'; iconClass = 'statute'; }
+      else if (n.type === 'AUDIT') { icon = 'verified'; iconClass = 'audit'; }
+
+      return `
+        <button class="notif-item ${n.read ? '' : 'unread'}" data-notif-id="${n.id}">
+          <div class="notif-icon-circle ${iconClass}">
+            <span class="material-symbols-outlined" style="font-size: 16px;">${icon}</span>
+          </div>
+          <div class="notif-item-body">
+            <div class="notif-item-title">${n.title}</div>
+            <div class="notif-item-desc">${n.message}</div>
+            <div class="notif-item-time">${n.time}</div>
+          </div>
+          ${n.read ? '' : '<span class="notif-unread-dot"></span>'}
+        </button>
+      `;
+    }).join('');
+
+    // Attach click events on notification items
+    listEl.querySelectorAll('.notif-item').forEach(btn => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        const nid = btn.dataset.notifId;
+        const target = notifs.find(n => n.id === nid);
+        if (target) {
+          target.read = true;
+          this.renderNotifications();
+          const menu = document.querySelector('#notifDropdownMenu');
+          if (menu) menu.classList.remove('open');
+
+          if (target.caseId) {
+            this.selectCase(target.caseId);
+          }
+          if (target.targetPath) {
+            this.navigate(target.targetPath);
+          }
+        }
+      };
+    });
+  }
+
   attachGlobalShellEvents() {
     // Mobile menu drawer
     const menuBtn = document.querySelector('#mobileMenuBtn');
@@ -163,6 +223,57 @@ class LegalMetApp {
     if (topbarSearch) {
       topbarSearch.onclick = () => this.navigate('/global-search');
     }
+
+    // Notification Bell Toggle & Dropdown Drawer
+    const bellBtn = document.querySelector('#notifBellBtn');
+    const notifMenu = document.querySelector('#notifDropdownMenu');
+    if (bellBtn && notifMenu) {
+      bellBtn.onclick = (e) => {
+        e.stopPropagation();
+        notifMenu.classList.toggle('open');
+        bellBtn.classList.toggle('active');
+        this.renderNotifications();
+      };
+
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('#notifDropdownWrapper')) {
+          notifMenu.classList.remove('open');
+          bellBtn.classList.remove('active');
+        }
+      });
+    }
+
+    // Mark all notifications as read
+    const markAllBtn = document.querySelector('#btnMarkAllNotifsRead');
+    if (markAllBtn) {
+      markAllBtn.onclick = (e) => {
+        e.stopPropagation();
+        (this.state.data.notifications || []).forEach(n => n.read = true);
+        this.renderNotifications();
+        this.showToast('All notifications marked as read.', 'info');
+      };
+    }
+
+    // Global Notification Alert Bar actions
+    const globalBar = document.querySelector('#globalNotificationBar');
+    const globalBarAction = document.querySelector('#btnGlobalNotifAction');
+    const globalBarDismiss = document.querySelector('#btnGlobalNotifDismiss');
+
+    if (globalBarAction) {
+      globalBarAction.onclick = () => {
+        this.selectCase('LM-2026-8841');
+        this.navigate('/workspace');
+      };
+    }
+
+    if (globalBarDismiss && globalBar) {
+      globalBarDismiss.onclick = () => {
+        globalBar.style.display = 'none';
+      };
+    }
+
+    // Initial render of notification counter
+    this.renderNotifications();
 
     // Modal Close Backdrop Click
     const modalBackdrop = document.querySelector('#certModalBackdrop');

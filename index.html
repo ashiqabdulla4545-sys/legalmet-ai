@@ -147,6 +147,18 @@
 
     <!-- Main Viewport Area -->
     <main class="app-main">
+      <!-- Global Top Alert Notification Bar -->
+      <div class="global-notification-bar alert" id="globalNotificationBar">
+        <div class="global-notif-content">
+          <span class="global-notif-tag">URGENT ALERT</span>
+          <span>Dual MRP alteration detected in consignment <strong>LM-2026-8841</strong> (Darjeeling Tea).</span>
+          <a class="global-notif-btn-link" id="btnGlobalNotifAction">Review in Workstation &rarr;</a>
+        </div>
+        <button class="global-notif-close" id="btnGlobalNotifDismiss" aria-label="Dismiss Alert">
+          <span class="material-symbols-outlined" style="font-size: 16px;">close</span>
+        </button>
+      </div>
+
       <!-- Top Navigation Bar -->
       <header class="app-topbar" id="appTopbar">
         <div class="topbar-left">
@@ -167,6 +179,25 @@
         </div>
 
         <div class="topbar-right">
+          <!-- Notification Bell & Dropdown Drawer -->
+          <div class="notif-dropdown-wrapper" id="notifDropdownWrapper">
+            <button class="notif-bell-btn" id="notifBellBtn" title="Regulatory Notifications" aria-label="Notifications">
+              <span class="material-symbols-outlined" style="font-size: 20px;">notifications</span>
+              <span class="notif-badge-pill" id="notifBadgeCounter">3</span>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div class="notif-dropdown-menu" id="notifDropdownMenu">
+              <div class="notif-dropdown-header">
+                <span class="notif-dropdown-title">Regulatory Alerts</span>
+                <button class="notif-mark-read-btn" id="btnMarkAllNotifsRead">Mark all read</button>
+              </div>
+              <div class="notif-dropdown-list" id="notifDropdownList">
+                <!-- Dynamically populated from MockData -->
+              </div>
+            </div>
+          </div>
+
           <div class="system-status-indicator">
             <span class="status-dot pulse"></span>
             <span>NODE: DELHI-HSM-01</span>
