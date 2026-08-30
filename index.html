@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LegalMet AI — Compliance Station Workstation</title>
+  <meta name="description" content="State of the art regulatory intelligence, AI vision audit, and statutory compliance workstation for Legal Metrology inspectors." />
+
+  <!-- Google Fonts: Hanken Grotesk (Headlines), Inter (Body), JetBrains Mono (Technical/Data) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
+
+  <!-- Application Stylesheets -->
+  <link rel="stylesheet" href="styles/design-tokens.css" />
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/components.css" />
+  <link rel="stylesheet" href="styles/views.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Mobile Sidebar Backdrop -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Application Sidebar Navigation -->
+    <aside class="app-sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <div class="brand-badge">
+          <div class="brand-logo-icon">LM</div>
+          <div class="brand-text">
+            <span class="brand-title">LegalMet AI</span>
+            <span class="brand-subtitle">COMPLIANCE STATION</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-content">
+        <!-- Section 1: Core Desk -->
+        <div>
+          <div class="nav-section-title">Inspection Desk</div>
+          <ul class="nav-list">
+            <li>
+              <button class="nav-item-btn active" data-path="/command-center">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span>Command Center</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item-btn" data-path="/intake">
+                <span class="material-symbols-outlined">add_box</span>
+                <span>New Intake</span>
+                <span class="nav-item-badge alert">+ New</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item-btn" data-path="/workspace">
+                <span class="material-symbols-outlined">splitscreen</span>
+                <span>Workspace</span>
+                <span class="nav-item-badge">Active</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item-btn" data-path="/ai-status">
+                <span class="material-symbols-outlined">neurology</span>
+                <span>AI Pipeline</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section 2: Intelligence & Enforcement -->
+        <div>
+          <div class="nav-section-title">Intelligence &amp; Enforcement</div>
+          <ul class="nav-list">
+            <li>
+              <button class="nav-item-btn" data-path="/risk-radar">
+                <span class="material-symbols-outlined">radar</span>
+                <span>Risk Radar</span>
+                <span class="nav-item-badge alert">3 Hubs</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item-btn" data-path="/batch-reports">
+                <span class="material-symbols-outlined">analytics</span>
+                <span>Batch Reports</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item-btn" data-path="/regulatory-intel">
+                <span class="material-symbols-outlined">menu_book</span>
+                <span>Regulatory Library</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item-btn" data-path="/audit-trail">
+                <span class="material-symbols-outlined">history</span>
+                <span>Audit Trail</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section 3: System & Tools -->
+        <div>
+          <div class="nav-section-title">Workstation Tools</div>
+          <ul class="nav-list">
+            <li>
+              <button class="nav-item-btn" data-path="/global-search">
+                <span class="material-symbols-outlined">search</span>
+                <span>Global Search</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item-btn" data-path="/overview">
+                <span class="material-symbols-outlined">schema</span>
+                <span>System Architecture</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item-btn" data-path="/system-health">
+                <span class="material-symbols-outlined">settings</span>
+                <span>Settings &amp; Health</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item-btn" data-path="/login">
+                <span class="material-symbols-outlined">logout</span>
+                <span>Logout Session</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Inspector Footer Card -->
+      <div class="sidebar-footer">
+        <div class="inspector-profile">
+          <div class="inspector-avatar">RV</div>
+          <div class="inspector-meta">
+            <span class="inspector-name" id="sidebarInspectorName">Rajeshwar Varma</span>
+            <span class="inspector-id">INS-8842-DL (Grade 1)</span>
+          </div>
+        </div>
+        <span class="status-dot pulse" title="HSM Node Connected"></span>
+      </div>
+    </aside>
+
+    <!-- Main Viewport Area -->
+    <main class="app-main">
+      <!-- Top Navigation Bar -->
+      <header class="app-topbar" id="appTopbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Navigation Menu">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+          <div class="breadcrumb-trail">
+            <span>Enforcement Wing</span>
+            <span>/</span>
+            <span class="current" id="breadcrumbCurrent">Command Center</span>
+          </div>
+        </div>
+
+        <div class="topbar-search-trigger" id="topbarSearchTrigger">
+          <span class="material-symbols-outlined" style="font-size: 18px;">search</span>
+          <span>Search cases, commodities, statutes...</span>
+          <span class="kbd-shortcut">Ctrl+K</span>
+        </div>
+
+        <div class="topbar-right">
+          <div class="system-status-indicator">
+            <span class="status-dot pulse"></span>
+            <span>NODE: DELHI-HSM-01</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dynamic Page Container (Views render here) -->
+      <div id="mainViewContainer" style="flex: 1; display: flex; flex-direction: column;"></div>
+    </main>
+  </div>
+
+  <!-- Official Certificate Modal Overlay -->
+  <div class="modal-backdrop" id="certModalBackdrop">
+    <div class="modal-dialog" style="max-width: 780px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span class="material-symbols-outlined" style="font-size: 20px;">verified</span>
+          <span style="font-weight: 700; font-size: 14px; text-transform: uppercase;">Metrology Certificate Preview</span>
+        </div>
+        <button class="btn btn-outline btn-sm btn-icon-only" id="btnModalCloseCert">
+          <span class="material-symbols-outlined" style="font-size: 18px;">close</span>
+        </button>
+      </div>
+
+      <div class="modal-body" id="certModalContent" style="background-color: #efeeea; padding: var(--space-4);">
+        <!-- Generated certificate paper inserted here -->
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" id="btnModalJsonCert">
+          <span class="material-symbols-outlined" style="font-size: 16px;">data_object</span>
+          <span>Export JSON</span>
+        </button>
+        <button class="btn btn-primary btn-sm" id="btnModalPrintCert">
+          <span class="material-symbols-outlined" style="font-size: 16px;">print</span>
+          <span>Print / Save as PDF</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript Module -->
+  <script type="module" src="scripts/app.js"></script>
+</body>
+</html>

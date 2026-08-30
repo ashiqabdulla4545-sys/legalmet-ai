@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="teaBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2c1a0e"/>
+      <stop offset="100%" stop-color="#140a04"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Package Outer Box -->
+  <rect x="100" y="40" width="600" height="520" rx="8" fill="url(#teaBg)" stroke="#c59b27" stroke-width="4" filter="url(#shadow)"/>
+
+  <!-- Gold Decorative Border -->
+  <rect x="115" y="55" width="570" height="490" rx="4" fill="none" stroke="#e0bc5d" stroke-width="1.5" stroke-dasharray="8,4"/>
+
+  <!-- Brand Banner -->
+  <rect x="160" y="80" width="480" height="70" rx="4" fill="#3d210b" stroke="#e0bc5d" stroke-width="2"/>
+  <text x="400" y="115" font-family="'Hanken Grotesk', sans-serif" font-size="28" font-weight="bold" fill="#f8e7b9" text-anchor="middle" letter-spacing="2">HIMALAYAN BREWS</text>
+  <text x="400" y="138" font-family="'Inter', sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle" letter-spacing="4">DARJEELING ROYAL GOLD TEA</text>
+
+  <!-- Golden Leaf Emblem -->
+  <circle cx="400" cy="200" r="35" fill="#3d210b" stroke="#e0bc5d" stroke-width="2"/>
+  <path d="M 400,175 C 385,195 385,215 400,225 C 415,215 415,195 400,175 Z" fill="#e0bc5d"/>
+
+  <!-- Commodity & Description -->
+  <text x="400" y="260" font-family="'Inter', sans-serif" font-size="16" fill="#e2d2b5" text-anchor="middle">Premium Single Estate Pure Orthodox Whole Leaf Tea</text>
+
+  <!-- Mandatory Declarations Panel (PCR 2011) -->
+  <rect x="140" y="290" width="520" height="230" rx="4" fill="#fbf9f4" stroke="#d5cebe" stroke-width="1.5"/>
+
+  <!-- Left Column: Net Content & Manufacturer -->
+  <g transform="translate(160, 315)">
+    <text x="0" y="0" font-family="'Inter', sans-serif" font-size="11" font-weight="bold" fill="#4a443a" text-transform="uppercase">Net Quantity:</text>
+    <text x="0" y="24" font-family="'Hanken Grotesk', sans-serif" font-size="22" font-weight="800" fill="#1b1c1a">500 g</text>
+
+    <text x="0" y="55" font-family="'Inter', sans-serif" font-size="10" font-weight="bold" fill="#7a7060">PACKED &amp; MARKETED BY:</text>
+    <text x="0" y="70" font-family="'Inter', sans-serif" font-size="11" fill="#1b1c1a">Himalayan Brews &amp; Tea Estates Ltd.</text>
+    <text x="0" y="85" font-family="'Inter', sans-serif" font-size="10" fill="#4a443a">Plot 14, Siliguri Tea Hub, WB - 734001</text>
+    <text x="0" y="100" font-family="'Inter', sans-serif" font-size="10" fill="#4a443a">FSSAI Lic. No: 10019031002991</text>
+
+    <text x="0" y="130" font-family="'Inter', sans-serif" font-size="10" font-weight="bold" fill="#7a7060">CONSUMER CARE / GRIEVANCE:</text>
+    <text x="0" y="145" font-family="'Inter', sans-serif" font-size="10" fill="#1b1c1a">Email: care@himalayanbrews.com</text>
+    <text x="0" y="160" font-family="'Inter', sans-serif" font-size="10" fill="#1b1c1a">Toll Free: 1800-425-9988</text>
+  </g>
+
+  <!-- Right Column: MRP, Date & Dual Sticker Anomaly -->
+  <g transform="translate(420, 315)">
+    <text x="0" y="0" font-family="'Inter', sans-serif" font-size="10" font-weight="bold" fill="#7a7060">BATCH &amp; PACKAGING DATE:</text>
+    <text x="0" y="18" font-family="'JetBrains Mono', monospace" font-size="12" fill="#1b1c1a">B.No: HB-2026-B09 | PKG: 02/2026</text>
+
+    <text x="0" y="45" font-family="'Inter', sans-serif" font-size="10" font-weight="bold" fill="#7a7060">MAXIMUM RETAIL PRICE (MRP):</text>
+    
+    <!-- Original Printed MRP (Underlay) -->
+    <text x="0" y="65" font-family="'Inter', sans-serif" font-size="13" fill="#888888" text-decoration="line-through">₹ 380.00 (Incl. of all taxes)</text>
+
+    <!-- Secondary Sticker Overprint (The Violation Area) -->
+    <rect x="-5" y="75" width="220" height="55" rx="3" fill="#ffffff" stroke="#d13438" stroke-width="2" stroke-dasharray="4,2"/>
+    <text x="5" y="95" font-family="'Inter', sans-serif" font-size="10" font-weight="bold" fill="#d13438">REVISED MRP (OVERPRINT STICKER):</text>
+    <text x="5" y="120" font-family="'Hanken Grotesk', sans-serif" font-size="20" font-weight="800" fill="#d13438">₹ 420.00</text>
+    <text x="110" y="118" font-family="'Inter', sans-serif" font-size="10" fill="#444444">(USP: ₹ 0.84/g)</text>
+
+    <!-- Barcode simulation -->
+    <g transform="translate(0, 142)">
+      <rect x="0" y="0" width="160" height="24" fill="#000000"/>
+      <rect x="10" y="0" width="4" height="24" fill="#ffffff"/>
+      <rect x="18" y="0" width="8" height="24" fill="#ffffff"/>
+      <rect x="32" y="0" width="4" height="24" fill="#ffffff"/>
+      <rect x="44" y="0" width="6" height="24" fill="#ffffff"/>
+      <rect x="60" y="0" width="10" height="24" fill="#ffffff"/>
+      <rect x="80" y="0" width="4" height="24" fill="#ffffff"/>
+      <rect x="94" y="0" width="8" height="24" fill="#ffffff"/>
+      <rect x="110" y="0" width="4" height="24" fill="#ffffff"/>
+      <rect x="124" y="0" width="6" height="24" fill="#ffffff"/>
+      <rect x="140" y="0" width="4" height="24" fill="#ffffff"/>
+      <text x="80" y="36" font-family="'JetBrains Mono', monospace" font-size="9" fill="#333333" text-anchor="middle">8901234567890</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,22 @@
+{
+  "name": "legalmet-ai-compliance-station",
+  "version": "1.0.0",
+  "description": "State of the art regulatory intelligence, AI vision audit, and statutory compliance workstation for Legal Metrology inspectors.",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8080",
+    "serve": "npx -y serve . -l 8080",
+    "dev": "python -m http.server 8080"
+  },
+  "keywords": [
+    "legalmet",
+    "metrology",
+    "compliance",
+    "regulatory-tech",
+    "packaged-commodities",
+    "legalmet-ai",
+    "ai-audit"
+  ],
+  "author": "LegalMet AI Team",
+  "license": "UNLICENSED"
+}

@@ -1,0 +1,622 @@
+/* ==========================================================================
+   VIEW-SPECIFIC LAYOUTS & COMPLEX WORKSTATION STYLES
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. LOGIN VIEW
+   -------------------------------------------------------------------------- */
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-surface);
+  padding: var(--space-4);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 440px;
+  background-color: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.login-header {
+  text-align: center;
+}
+
+.login-emblem {
+  width: 48px;
+  height: 48px;
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  margin: 0 auto var(--space-3);
+  font-size: 24px;
+}
+
+.biometric-scanner-box {
+  border: 1px dashed var(--color-outline-variant);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  text-align: center;
+  background-color: var(--color-surface-container-low);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: all var(--transition-fast);
+}
+
+.biometric-scanner-box:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-surface-container);
+}
+
+.biometric-icon {
+  font-size: 36px;
+  color: var(--color-brand-accent);
+}
+
+/* --------------------------------------------------------------------------
+   2. COMMAND CENTER VIEW
+   -------------------------------------------------------------------------- */
+.command-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.dashboard-sections-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-6);
+}
+
+.review-queue-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.queue-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.queue-item:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+.queue-item-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.queue-item-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.queue-item-title {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.queue-item-sub {
+  font-size: 11px;
+  color: var(--color-on-surface-variant);
+  font-family: var(--font-mono);
+}
+
+.perception-health-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.health-meter-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.health-meter-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.progress-track {
+  height: 6px;
+  background-color: var(--color-surface-container-high);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-pill);
+  transition: width 0.6s ease;
+}
+
+.progress-fill.status-ok { background-color: var(--color-status-compliant); }
+.progress-fill.status-warn { background-color: var(--color-status-review); }
+.progress-fill.status-crit { background-color: var(--color-status-violation); }
+
+/* --------------------------------------------------------------------------
+   3. NEW INTAKE VIEW
+   -------------------------------------------------------------------------- */
+.intake-layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+
+.preset-selector-bar {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.preset-chip {
+  padding: 6px 12px;
+  background-color: var(--color-surface-container);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.preset-chip:hover, .preset-chip.active {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+/* --------------------------------------------------------------------------
+   4. AI PROCESSING PIPELINE VIEW
+   -------------------------------------------------------------------------- */
+.pipeline-container {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.pipeline-stepper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  position: relative;
+}
+
+.pipeline-step-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background-color: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-normal);
+}
+
+.pipeline-step-card.active {
+  border-color: var(--color-brand-accent);
+  background-color: #fff9f6;
+  box-shadow: var(--shadow-sm);
+}
+
+.pipeline-step-card.completed {
+  border-color: var(--color-status-compliant-border);
+  background-color: #f7fbf7;
+}
+
+.pipeline-step-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-surface-container);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.pipeline-step-card.active .pipeline-step-icon {
+  background-color: var(--color-brand-accent);
+  color: #ffffff;
+  animation: pulseIcon 1.5s infinite;
+}
+
+.pipeline-step-card.completed .pipeline-step-icon {
+  background-color: var(--color-status-compliant);
+  color: #ffffff;
+}
+
+@keyframes pulseIcon {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.terminal-box {
+  background-color: #121312;
+  color: #c4f4e4;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: var(--space-4);
+  border-radius: var(--radius-sm);
+  height: 180px;
+  overflow-y: auto;
+  border: 1px solid #2f312e;
+}
+
+/* --------------------------------------------------------------------------
+   5. INSPECTION WORKSPACE (SPLIT-VIEW WORKSTATION)
+   -------------------------------------------------------------------------- */
+.workspace-split-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-4);
+  height: calc(100vh - var(--topbar-height) - 48px);
+  min-height: 600px;
+}
+
+.workspace-canvas-panel {
+  background-color: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.canvas-toolbar {
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--color-surface-container-low);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.canvas-viewport {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background-color: #2b2c2a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+}
+
+.canvas-viewport:active {
+  cursor: grabbing;
+}
+
+.evidence-image-stage {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border-radius: var(--radius-xs);
+  transition: transform 0.1s ease-out;
+}
+
+.workspace-decision-panel {
+  background-color: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.workspace-findings-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.finding-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  background-color: var(--color-surface-container-low);
+  transition: all var(--transition-fast);
+}
+
+.finding-card.violation {
+  border-left: 4px solid var(--color-status-violation);
+  background-color: #fffafb;
+}
+
+.finding-card.compliant {
+  border-left: 4px solid var(--color-status-compliant);
+  background-color: #fafdfa;
+}
+
+.finding-card.review {
+  border-left: 4px solid var(--color-status-review);
+  background-color: #fefdf9;
+}
+
+.workspace-action-bar {
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-surface-container-low);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+/* --------------------------------------------------------------------------
+   6. EVIDENCE WHY (XAI PROVENANCE VIEW)
+   -------------------------------------------------------------------------- */
+.provenance-chain-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4);
+  background-color: var(--color-surface-container-low);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-6);
+  overflow-x: auto;
+}
+
+.provenance-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  min-width: 110px;
+}
+
+.provenance-icon-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.provenance-arrow {
+  color: var(--color-outline);
+  font-size: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   7. BATCH INTELLIGENCE & REPORTS VIEW
+   -------------------------------------------------------------------------- */
+.reports-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.bar-chart-mock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: 12px;
+}
+
+.bar-row-label {
+  width: 140px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bar-row-track {
+  flex: 1;
+  height: 14px;
+  background-color: var(--color-surface-container);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+}
+
+.bar-row-fill {
+  height: 100%;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-xs);
+}
+
+.bar-row-fill.accent { background-color: var(--color-brand-accent); }
+.bar-row-fill.violation { background-color: var(--color-status-violation); }
+
+/* Certificate Preview Modal */
+.certificate-preview-paper {
+  background-color: #ffffff;
+  color: #000000;
+  padding: 36px;
+  border: 2px solid #1b1b1b;
+  border-radius: 2px;
+  font-family: var(--font-body);
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.certificate-header-stamp {
+  border-bottom: 2px solid #000000;
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.seal-watermark {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-20deg);
+  font-size: 64px;
+  font-weight: 900;
+  color: rgba(16, 124, 16, 0.12);
+  border: 6px solid rgba(16, 124, 16, 0.18);
+  padding: 10px 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  pointer-events: none;
+}
+
+.seal-watermark.violation-seal {
+  color: rgba(209, 52, 56, 0.12);
+  border-color: rgba(209, 52, 56, 0.18);
+}
+
+/* --------------------------------------------------------------------------
+   8. AUDIT TRAIL VIEW
+   -------------------------------------------------------------------------- */
+.audit-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  position: relative;
+}
+
+.audit-timeline::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 20px;
+  width: 2px;
+  background-color: var(--color-border);
+}
+
+.audit-node-item {
+  display: flex;
+  gap: var(--space-4);
+  position: relative;
+  z-index: 2;
+}
+
+.audit-node-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-surface-container-lowest);
+  border: 2px solid var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.audit-node-card {
+  flex: 1;
+  background-color: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+}
+
+/* --------------------------------------------------------------------------
+   9. RISK RADAR VIEW
+   -------------------------------------------------------------------------- */
+.radar-layout-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--space-6);
+}
+
+.heatmap-canvas-container {
+  background-color: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  height: 380px;
+  position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   10. GLOBAL SEARCH VIEW
+   -------------------------------------------------------------------------- */
+.search-hero-box {
+  margin-bottom: var(--space-6);
+}
+
+.search-input-large {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-container-lowest);
+  box-shadow: var(--shadow-sm);
+}
+
+.search-input-large:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .command-grid, .reports-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .dashboard-sections-grid, .intake-layout-grid, .radar-layout-grid {
+    grid-template-columns: 1fr;
+  }
+  .workspace-split-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .workspace-canvas-panel {
+    height: 420px;
+  }
+}
+
+@media (max-width: 640px) {
+  .command-grid, .reports-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
