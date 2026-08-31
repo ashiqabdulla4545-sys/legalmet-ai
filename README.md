@@ -2,27 +2,54 @@
 
 > **High-stakes regulatory intelligence, AI vision audit, and statutory compliance workstation for Legal Metrology officers.**
 
-Built from the Stitch MCP design system (*LegalMet Core*), this application delivers an authoritative, high-density regulatory tech workstation for metrology inspectors, state packaging compliance officers, and enforcement adjudicators.
+Built with **LegalMet Core** design system on the frontend and **FastAPI + SQLite** on the backend, this application delivers an authoritative, high-density regulatory tech workstation for metrology inspectors, state packaging compliance officers, and enforcement adjudicators.
 
 ---
 
-## 📁 Project Structure
+## 📁 Full-Stack Project Structure
 
 ```
 legalmet-ai/
 ├── index.html                 # Single Page Application container & layout shell
 ├── package.json               # Project manifest & npm scripts
-├── start.bat                  # 1-click Windows startup script
+├── start.bat                  # 1-click Windows startup script (Frontend on port 8080)
+├── start_backend.bat          # 1-click Windows startup script (FastAPI on port 8000)
 ├── README.md                  # Comprehensive project documentation
+│
+├── backend/                   # Complete Python FastAPI Backend System
+│   ├── main.py                # FastAPI entry point, CORS, and router registration
+│   ├── database.py            # SQLite schema, ORM connection, and seed populator
+│   ├── models.py              # Pydantic v2 domain schemas & request/response models
+│   ├── test_api.py            # Automated 30-test endpoint verification suite
+│   ├── uploads/               # Packaging evidence file storage
+│   ├── services/
+│   │   ├── perception_engine.py  # 6-Stage AI perception & rule evaluation engine
+│   │   ├── audit_service.py      # Cryptographic SHA-256 state hash chaining
+│   │   └── cert_service.py       # Formal Metrology certificate & notice generator
+│   └── routers/
+│       ├── auth_router.py        # 1. /api/auth (Inspector Login, Biometrics, JWT)
+│       ├── dashboard_router.py   # 2. /api/dashboard (KPIs, Triage Queue, Telemetry)
+│       ├── intake_router.py      # 3. /api/intake (Multipart uploads & case registration)
+│       ├── pipeline_router.py    # 4. /api/pipeline (AI vision & rule evaluation stream)
+│       ├── cases_router.py       # 5. /api/cases (Workstation CRUD, overrides, decisions)
+│       ├── xai_router.py         # 6. /api/xai (Explainable AI provenance & penalty matrix)
+│       ├── reports_router.py     # 7. /api/reports (Batch analytics & certificates)
+│       ├── audit_router.py       # 8. /api/audit (Immutable cryptographic audit ledger)
+│       ├── statutes_router.py    # 9. /api/statutes (Rulebook & Schedule II calculator)
+│       ├── radar_router.py       # 10. /api/radar (Hotspot surveillance & squad dispatch)
+│       ├── search_router.py      # 11. /api/search (Unified multi-entity search)
+│       ├── notifications_router.py # 12. /api/notifications (Alerts & unread counter)
+│       └── system_router.py      # 13. /api/system (Telemetry & diagnostic tests)
 │
 ├── styles/
 │   ├── design-tokens.css      # LegalMet Core palette, typography, variables
-│   ├── base.css               # Reset, typography, app sidebar, topbar
+│   ├── base.css               # Reset, typography, app sidebar, topbar, alert banner
 │   ├── components.css         # Buttons, badges, confidence meters, tables, modals, dropzones
 │   └── views.css              # Workstation split-view, radar heatmap, telemetry steppers
 │
 ├── scripts/
 │   ├── app.js                 # Central application bootstrap, client-side router & state store
+│   ├── api-client.js          # Async API Client communicating with FastAPI
 │   ├── mock-data.js           # Metrology cases, statutes, audit ledger, risk radar data
 │   ├── utils/
 │   │   ├── certificate-generator.js  # Metrology certificate & violation notice exporter
@@ -52,43 +79,64 @@ legalmet-ai/
 
 ---
 
-## 🚀 Quick Start & Running Locally
+## 🚀 Running the Full Stack Application
 
-### Option 1: Double-click `start.bat`
-Simply double-click the `start.bat` file in this folder. It will launch a local server and open your browser automatically.
-
-### Option 2: Python HTTP Server
+### 1. Launch the Backend Server (FastAPI)
 ```bash
+# Option A: Windows 1-Click
+start_backend.bat
+
+# Option B: Command line
+python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000 --reload
+```
+* **API Documentation (Swagger UI)**: `http://127.0.0.1:8000/docs`
+* **API Redoc**: `http://127.0.0.1:8000/redoc`
+
+### 2. Launch the Frontend Application
+```bash
+# Option A: Windows 1-Click
+start.bat
+
+# Option B: Command line
 python -m http.server 8080
 ```
-Then navigate to: **`http://127.0.0.1:8080`**
+* **Frontend Web App**: `http://127.0.0.1:8080`
 
-### Option 3: Node / NPX
+### 3. Run Automated Backend Test Suite
 ```bash
-npx serve .
+python backend/test_api.py
 ```
+*(Runs 30 automated tests validating all 13 modular API services with 100% pass rate)*
 
 ---
 
-## 🎯 Key Capabilities & Screen Routes
+## 🏛️ Modular API Reference (13 Modules)
 
-- **`#/login`**: Regulatory session login with simulated biometric authentication.
-- **`#/command-center`**: Key compliance metrics, triage queue, and perception health meters.
-- **`#/intake`**: Multi-format packaging drag-and-drop zone and instant sample presets.
-- **`#/ai-status`**: Animated 6-stage telemetry stepper with live OCR terminal log feed.
-- **`#/workspace`**: Interactive split-view workstation with zoom, pan, bounding box highlights, confidence indicators, and field justification notes.
-- **`#/evidence-why`**: Explainable AI provenance graph, token attention layer differentials, and Section 36(1) penalty matrix.
-- **`#/batch-reports`**: Recurring defect breakdowns and formal Metrology Certificate generator.
-- **`#/audit-trail`**: Immutable audit ledger with cryptographic SHA-256 block hashes.
-- **`#/regulatory-intel`**: Full text of *Legal Metrology Act 2009*, *Packaged Commodities Rules 2011*, and an interactive **Schedule II Font Height Calculator**.
-- **`#/risk-radar`**: Geographic enforcement hotspot map of Delhi-NCR (*Azadpur*, *Okhla*, *Narela*).
-- **`#/global-search`**: Fast multi-entity search with keyboard shortcut (`Ctrl+K` / `/`).
-- **`#/system-health`**: Telemetry benchmarks, GPU cluster status, and RBAC role switcher.
-- **`#/overview`**: Complete visual roadmap of all 13 screens.
+| # | Service Domain | Base Endpoint | Key Operations |
+|---|---|---|---|
+| 1 | **Auth & Biometrics** | `/api/auth` | Inspector PIN login, UIDAI biometric check, `/me` profile |
+| 2 | **Command Center** | `/api/dashboard` | Live KPIs, priority queue, perception health telemetry |
+| 3 | **Consignment Intake** | `/api/intake` | Multipart evidence upload, case registration, presets |
+| 4 | **AI Perception Pipeline** | `/api/pipeline` | 6-stage algorithmic analysis, live logs stream |
+| 5 | **Workstation Cases** | `/api/cases` | Split-view payload, findings list, overrides, decisions |
+| 6 | **Explainable AI (XAI)** | `/api/xai` | Layer decomposition, certainty graphs, Section 36(1) matrix |
+| 7 | **Reports & Certificates** | `/api/reports` | Batch aggregations, formal NCT Delhi Metrology certificate |
+| 8 | **Cryptographic Audit** | `/api/audit` | Immutable SHA-256 block ledger, integrity verification |
+| 9 | **Statutes & Calculator** | `/api/statutes`, `/api/calculator` | Statute search, Schedule II font height calculator |
+| 10 | **Risk Radar** | `/api/radar` | Hotspot coordinates, watchlist, squad deployment |
+| 11 | **Global Search** | `/api/search` | Multi-entity query engine across cases, barcodes, statutes |
+| 12 | **Notifications & Alerts** | `/api/notifications` | Real-time alert feed, unread counter, mark-as-read |
+| 13 | **System & Diagnostics** | `/api/system` | Subsystem telemetry, cache purge, 12-point diagnostics |
 
 ---
 
-## ⚖️ Regulatory References Included
-- **The Legal Metrology Act, 2009** (Sections 18, 36, 49, 53)
-- **Legal Metrology (Packaged Commodities) Rules, 2011** (Rule 6 Declarations, Rule 9 Font Schedule II, Rule 12 Metric units, Rule 18 Retail prices)
-- **Packaged Commodities (Amendment) Rules, 2022** (Dual quantity volume + mass at 30°C for edible oils)
+## 🔒 Statutory Legal Metrology Compliance Matrix
+
+* **The Legal Metrology Act, 2009** (Act No. 1 of 2010):
+  * **Section 18**: Mandatory declarations on pre-packaged commodities.
+  * **Section 36(1)**: Non-standard packaging offences (₹25k / ₹50k / ₹1L + imprisonment).
+  * **Section 49**: Corporate offences and director liability.
+* **Legal Metrology (Packaged Commodities) Rules, 2011** (Amended 2022):
+  * **Rule 6(1)(e)**: Strict prohibition of retail price (MRP) alteration or overprinting.
+  * **Rule 6(1)(n)**: Mandatory phone and email for consumer grievance redressal.
+  * **Schedule II, Table 1**: Mathematical font height thresholds for numerals.
