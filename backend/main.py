@@ -1,8 +1,10 @@
-# ==============================================================================
-# LEGALMET AI: COMPLIANCE STATION - FASTAPI BACKEND ENTRYPOINT
-# ==============================================================================
-
 import os
+import sys
+
+# Ensure both project root and backend dir are in sys.path
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 import uvicorn
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
@@ -10,6 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from backend.database import init_db
+
 
 # Import all 13 routers
 from backend.routers.auth_router import router as auth_router
