@@ -95,13 +95,40 @@ export class ApiClient {
   }
 
   // 5. Cases Workstation APIs
+  normalizeCase(c) {
+    if (!c) return c;
+    return {
+      ...c,
+      packerAddress: c.packerAddress || c.packer_address || "",
+      batchNo: c.batchNo || c.batch_no || "",
+      mfgDate: c.mfgDate || c.mfg_date || "",
+      expiryDate: c.expiryDate || c.expiry_date || "",
+      declaredNetQty: c.declaredNetQty || c.declared_net_qty || "",
+      declaredMrp: c.declaredMrp || c.declared_mrp || "",
+      unitSalePrice: c.unitSalePrice || c.unit_sale_price || "",
+      consumerCare: c.consumerCare || c.consumer_care || "",
+      riskScore: c.riskScore !== undefined ? c.riskScore : (c.risk_score !== undefined ? c.risk_score : 50),
+      dateIntake: c.dateIntake || c.date_intake || "",
+      intakeBy: c.intakeBy || c.intake_by || "",
+      findings: (c.findings || []).map(f => ({
+        ...f,
+        rule: f.rule || f.rule_name || "",
+        confidencePct: f.confidencePct !== undefined ? f.confidencePct : (f.confidence_pct !== undefined ? f.confidence_pct : 90),
+        boundingTag: f.boundingTag || f.bounding_tag || "",
+        evidenceNote: f.evidenceNote || f.evidence_note || ""
+      }))
+    };
+  }
+
   async listCases(status = null) {
     const query = status ? `?status=${encodeURIComponent(status)}` : '';
-    return this.request(`/api/cases${query}`);
+    const list = await this.request(`/api/cases${query}`);
+    return (list || []).map(c => this.normalizeCase(c));
   }
 
   async getCaseDetail(caseId) {
-    return this.request(`/api/cases/${caseId}`);
+    const c = await this.request(`/api/cases/${caseId}`);
+    return this.normalizeCase(c);
   }
 
   async overrideCase(caseId, justification, newStatus = "COMPLIANT") {

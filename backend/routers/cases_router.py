@@ -11,7 +11,7 @@ import json
 
 router = APIRouter(prefix="/api/cases", tags=["Cases Workstation"])
 
-@router.get("", response_model=List[CaseResponse])
+@router.get("", response_model=List[CaseDetailResponse])
 def list_cases(status: Optional[str] = None):
     conn = get_connection()
     cursor = conn.cursor()
@@ -22,10 +22,37 @@ def list_cases(status: Optional[str] = None):
         cursor.execute("SELECT * FROM cases ORDER BY risk_score DESC;")
 
     rows = cursor.fetchall()
-    conn.close()
+    
+    results = []
+    for r in rows:
+        cursor.execute("SELECT * FROM findings WHERE case_id = ?;", (r["id"],))
+        f_rows = cursor.fetchall()
+        findings_list = []
+        for f in f_rows:
+            bbox_obj = None
+            if f["bbox_json"]:
+                try:
+                    b = json.loads(f["bbox_json"])
+                    bbox_obj = BoundingBox(x=b["x"], y=b["y"], w=b["w"], h=b["h"])
+                except Exception:
+                    pass
+            findings_list.append(FindingSchema(
+                id=f["id"],
+                case_id=f["case_id"],
+                rule_name=f["rule_name"],
+                statute=f["statute"],
+                section=f["section"],
+                type=f["type"],
+                confidence=f["confidence"],
+                confidence_pct=f["confidence_pct"],
+                title=f["title"],
+                description=f["description"],
+                bbox=bbox_obj,
+                bounding_tag=f["bounding_tag"],
+                evidence_note=f["evidence_note"]
+            ))
 
-    return [
-        CaseResponse(
+        results.append(CaseDetailResponse(
             id=r["id"],
             title=r["title"],
             commodity=r["commodity"],
@@ -45,9 +72,13 @@ def list_cases(status: Optional[str] = None):
             date_intake=r["date_intake"],
             intake_by=r["intake_by"],
             image=r["image"],
-            summary=r["summary"]
-        ) for r in rows
-    ]
+            summary=r["summary"],
+            findings=findings_list
+        ))
+
+    conn.close()
+    return results
+
 
 @router.get("/{case_id}", response_model=CaseDetailResponse)
 def get_case_detail(case_id: str):
