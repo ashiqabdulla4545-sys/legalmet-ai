@@ -86,4 +86,7 @@ def health_check():
     return {"status": "healthy", "database": "sqlite_connected"}
 
 if __name__ == "__main__":
-    uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)
+    module_target = "backend.main:app" if os.path.exists("backend") else "main:app"
+    print(f"Starting LegalMet AI Backend on http://127.0.0.1:8000 (target: {module_target})")
+    uvicorn.run(module_target, host="127.0.0.1", port=8000, reload=True)
+
