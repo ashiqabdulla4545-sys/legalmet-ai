@@ -144,6 +144,18 @@ export const AiStatusView = {
   },
 
   attachEvents(app) {
+    const currentCase = app.state.currentCase;
+    if (app.api && app.state.backendConnected && currentCase) {
+      app.api.analyzeCase(currentCase.id).then(res => {
+        if (res && res.logs) {
+          const logTerminal = document.querySelector('.terminal-window');
+          if (logTerminal) {
+            logTerminal.innerHTML = res.logs.map(l => `<div class="terminal-line"><span class="terminal-timestamp">${l.slice(0, 10)}</span> ${l.slice(11)}</div>`).join('');
+          }
+        }
+      }).catch(err => console.log('Pipeline run API notice:', err));
+    }
+
     const openWsBtn = document.querySelector('#btnOpenWorkspace');
     if (openWsBtn) {
       openWsBtn.onclick = () => {

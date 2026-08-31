@@ -1,8 +1,5 @@
-/* ==========================================================================
-   LEGALMET AI - MAIN APPLICATION BOOTSTRAP, ROUTER & STATE STORE
-   ========================================================================== */
-
 import { MockData } from './mock-data.js';
+import { api } from './api-client.js';
 import { CertificateGenerator } from './utils/certificate-generator.js';
 
 import { LoginView } from './views/login-view.js';
@@ -21,12 +18,14 @@ import { PrototypeOverviewView } from './views/prototype-overview-view.js';
 
 class LegalMetApp {
   constructor() {
+    this.api = api;
     this.state = {
       currentPath: window.location.hash.slice(1) || '/command-center',
       currentCase: MockData.cases[0],
       data: MockData,
       theme: 'light',
-      sidebarOpen: false
+      sidebarOpen: false,
+      backendConnected: false
     };
 
     this.routes = {
@@ -46,6 +45,52 @@ class LegalMetApp {
     };
 
     this.init();
+    this.syncWithBackend();
+  }
+
+  async syncWithBackend() {
+    try {
+      const isOnline = await this.api.checkHealth();
+      if (isOnline) {
+        this.state.backendConnected = true;
+        const [cases, kpis, notifs] = await Promise.all([
+          this.api.listCases().catch(() => null),
+          this.api.getDashboardKPIs().catch(() => null),
+          this.api.getNotifications().catch(() => null)
+        ]);
+
+        if (cases && cases.length > 0) {
+          this.state.data.cases = cases;
+          if (!this.state.currentCase || !this.state.data.cases.find(c => c.id === this.state.currentCase.id)) {
+            this.state.currentCase = cases[0];
+          }
+        }
+        if (kpis) {
+          this.state.data.kpis = {
+            overallCompliance: kpis.overall_compliance,
+            inspectedToday: kpis.inspected_today,
+            activeQueue: kpis.active_queue,
+            violationsPending: kpis.violations_pending,
+            noticesIssued: kpis.notices_issued,
+            systemPerceptionHealth: kpis.system_perception_health
+          };
+        }
+        if (notifs && notifs.length > 0) {
+          this.state.data.notifications = notifs;
+          this.renderNotifications();
+        }
+
+        const nodeStatusEl = document.querySelector('.system-status-indicator');
+        if (nodeStatusEl) {
+          nodeStatusEl.innerHTML = `
+            <span class="status-dot pulse" style="background-color: #107c10;"></span>
+            <span>NODE: DELHI-HSM-01 (FASTAPI CONNECTED)</span>
+          `;
+        }
+      }
+    } catch (e) {
+      console.log('Running in local standalone mode:', e);
+    }
   }
 
   init() {

@@ -73,7 +73,22 @@ export const LoginView = {
     const biometricBtn = document.querySelector('#btnBiometric');
     const submitBtn = document.querySelector('#btnSubmitLogin');
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
+      const badge = document.querySelector('#loginBadge')?.value || 'INS-8842-DL';
+      const pin = document.querySelector('#loginPin')?.value || '12345678';
+
+      try {
+        if (app.api && app.state.backendConnected) {
+          const res = await app.api.login(badge, pin);
+          if (res && res.inspector) {
+            app.state.data.inspector = res.inspector;
+            app.updateHeaderProfile();
+          }
+        }
+      } catch (err) {
+        console.log('Login API notice:', err);
+      }
+
       app.showToast('Authentication Successful. Welcome, Officer Rajeshwar Varma.', 'success');
       app.navigate('/command-center');
     };
@@ -81,10 +96,18 @@ export const LoginView = {
     if (form) form.onsubmit = handleLogin;
     if (submitBtn) submitBtn.onclick = handleLogin;
     if (biometricBtn) {
-      biometricBtn.onclick = () => {
+      biometricBtn.onclick = async () => {
+        try {
+          if (app.api && app.state.backendConnected) {
+            await app.api.loginBiometric('INS-8842-DL');
+          }
+        } catch (e) {
+          console.log('Biometric API notice:', e);
+        }
         app.showToast('Biometric Match Confirmed (UIDAI Hash Verified).', 'success');
-        setTimeout(handleLogin, 400);
+        setTimeout(handleLogin, 300);
       };
     }
   }
 };
+

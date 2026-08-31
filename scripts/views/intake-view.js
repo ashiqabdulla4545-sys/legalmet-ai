@@ -225,8 +225,40 @@ export const IntakeView = {
 
     const startBtn = document.querySelector('#btnStartPipeline');
     if (startBtn) {
-      startBtn.onclick = () => {
-        app.showToast('Initiating Metrology Vision Pipeline...', 'info');
+      startBtn.onclick = async () => {
+        const title = document.querySelector('#intakeTitle')?.value || 'New Packaged Article';
+        const commodity = document.querySelector('#intakeCommodity')?.value || 'FMCG';
+        const manufacturer = document.querySelector('#intakeManufacturer')?.value || 'Registered Packer';
+        const netQty = document.querySelector('#intakeNetQty')?.value || '500 g';
+        const mrp = document.querySelector('#intakeMrp')?.value || '₹ 420.00';
+        const batch = document.querySelector('#intakeBatch')?.value || 'BATCH-2026-X1';
+
+        const payload = {
+          title,
+          commodity,
+          manufacturer,
+          packer_address: "Industrial Area Phase-1, Delhi 110020",
+          batch_no: batch,
+          mfg_date: "08/2026",
+          declared_net_qty: netQty,
+          declared_mrp: mrp,
+          unit_sale_price: "₹ 0.84 per g",
+          consumer_care: "support@compliance.gov.in"
+        };
+
+        try {
+          if (app.api && app.state.backendConnected) {
+            const created = await app.api.createIntake(payload);
+            if (created) {
+              app.state.currentCase = created;
+              app.state.data.cases.unshift(created);
+            }
+          }
+        } catch (e) {
+          console.log('Create intake notice:', e);
+        }
+
+        app.showToast('Initiating Metrology Vision Pipeline on FastAPI node...', 'info');
         app.navigate('/ai-status');
       };
     }

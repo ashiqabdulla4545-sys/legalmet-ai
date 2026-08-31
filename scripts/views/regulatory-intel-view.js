@@ -127,19 +127,28 @@ export const RegulatoryIntelView = {
     const typeSelect = document.querySelector('#calcTypeSelect');
     const resHeight = document.querySelector('#calcResultHeight');
 
-    const updateCalc = () => {
+    const updateCalc = async () => {
       const area = parseInt(areaSelect.value);
       const type = typeSelect.value;
       let minMm = 2.0;
 
-      if (area <= 50) {
-        minMm = type === 'printed' ? 1.0 : 2.0;
-      } else if (area <= 200) {
-        minMm = type === 'printed' ? 2.0 : 4.0;
-      } else if (area <= 1000) {
-        minMm = type === 'printed' ? 4.0 : 6.0;
-      } else {
-        minMm = 6.0;
+      try {
+        if (app.api && app.state.backendConnected) {
+          const res = await app.api.calculateFontHeight(area, type);
+          if (res && res.min_height_mm !== undefined) {
+            minMm = res.min_height_mm;
+          }
+        } else {
+          if (area <= 50) minMm = type === 'printed' ? 1.0 : 2.0;
+          else if (area <= 200) minMm = type === 'printed' ? 2.0 : 4.0;
+          else if (area <= 1000) minMm = type === 'printed' ? 4.0 : 6.0;
+          else minMm = 6.0;
+        }
+      } catch (e) {
+        if (area <= 50) minMm = type === 'printed' ? 1.0 : 2.0;
+        else if (area <= 200) minMm = type === 'printed' ? 2.0 : 4.0;
+        else if (area <= 1000) minMm = type === 'printed' ? 4.0 : 6.0;
+        else minMm = 6.0;
       }
 
       if (resHeight) resHeight.textContent = `${minMm.toFixed(1)} mm`;

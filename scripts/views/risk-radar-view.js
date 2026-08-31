@@ -159,7 +159,14 @@ export const RiskRadarView = {
   attachEvents(app) {
     const raidBtn = document.querySelector('#btnPlanRaid');
     if (raidBtn) {
-      raidBtn.onclick = () => {
+      raidBtn.onclick = async () => {
+        try {
+          if (app.api && app.state.backendConnected) {
+            await app.api.deploySquad('Z-01', 'Inspection Squadron 04 (Mobile OCR Unit)');
+          }
+        } catch (e) {
+          console.log('Squad deploy notice:', e);
+        }
         app.showToast('Inspection Squadron 04 dispatched to Azadpur Mandi with mobile OCR scanner kits.', 'success');
       };
     }
